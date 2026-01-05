@@ -17,7 +17,7 @@ export default function RoleGuard({ children, allowedRoles, fallback }: RoleGuar
     return fallback || <div>Please log in to access this page.</div>;
   }
 
-  if (!hasRole(user.role, allowedRoles)) {
+  if (!hasRole(user.role as UserRole, allowedRoles)) {
     return fallback || <div>You don't have permission to access this page.</div>;
   }
 

@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
@@ -22,6 +24,7 @@ export default function StaffPage() {
   }, [user]);
 
   const fetchJobs = async () => {
+    if (!user) return;
     try {
       setLoading(true);
       // Fetch today's jobs for this staff member

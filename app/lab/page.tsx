@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
@@ -43,12 +45,14 @@ export default function LabPage() {
         else if (percentage >= 80) status = 'at_risk';
         
         return { ...order, elapsed, remaining, status };
-      });
+      }) as Array<any & { status: 'on_track' | 'at_risk' | 'breached' }>;
 
       // Sort: breached first, then at_risk, then on_track
-      categorized.sort((a, b) => {
-        const statusOrder = { breached: 0, at_risk: 1, on_track: 2 };
-        return statusOrder[a.status] - statusOrder[b.status];
+      categorized.sort((a: any, b: any) => {
+        const statusOrder: Record<'breached' | 'at_risk' | 'on_track', number> = { breached: 0, at_risk: 1, on_track: 2 };
+        const aStatus = a.status as 'breached' | 'at_risk' | 'on_track';
+        const bStatus = b.status as 'breached' | 'at_risk' | 'on_track';
+        return statusOrder[aStatus] - statusOrder[bStatus];
       });
 
       setQueue(categorized);

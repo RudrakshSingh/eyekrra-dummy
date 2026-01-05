@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Bell, Settings, Package, MapPin, CheckCircle2, Clock, Truck, Sparkles, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,7 +8,9 @@ import SLATimer from '@/components/SLATimer';
 import TopBar from '@/components/TopBar';
 import { storage } from '@/lib/storage';
 
-export default function TrackPage() {
+export const dynamic = 'force-dynamic';
+
+function TrackPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get('id') || searchParams.get('order') || '';
@@ -347,5 +349,13 @@ function AnimatedTimeline({ stages }: { stages: any[] }) {
         })}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function TrackPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <TrackPageContent />
+    </Suspense>
   );
 }

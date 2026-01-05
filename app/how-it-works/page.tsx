@@ -16,12 +16,12 @@ function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-extrabold tracking-tight">{children}</h1>;
 }
 
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xl font-bold tracking-tight">{children}</h2>;
+function H2({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <h2 className={`text-xl font-bold tracking-tight ${className}`}>{children}</h2>;
 }
 
-function Muted({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm text-gray-500">{children}</p>;
+function Muted({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <p className={`text-sm text-gray-500 ${className}`}>{children}</p>;
 }
 
 function ButtonWF({
